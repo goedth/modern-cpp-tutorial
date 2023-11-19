@@ -716,11 +716,11 @@ int main() {
 你应该感受到了这很繁琐，在 C++17 中增加了变参模板展开的支持，于是你可以在一个函数中完成 `printf` 的编写：
 
 ```cpp
-template<typename T0, typename... T>
-void printf2(T0 t0, T... t) {
-    std::cout << t0 << std::endl;
-    if constexpr (sizeof...(t) > 0) printf2(t...);
+template<typename... T>
+void printf2(T... t) {
+    ((std::cout << t << std::endl), ...);
 }
+
 ```
 
 > 事实上，有时候我们虽然使用了变参模板，却不一定需要对参数做逐个遍历，我们可以利用 `std::bind` 及完美转发等特性实现对函数和参数的绑定，从而达到成功调用的目的。
